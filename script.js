@@ -55,7 +55,6 @@ overlay.addEventListener("click", (e) => {
     if (e.target === overlay) closePopup();
 });
 
-// --- FLIP CARD FUNKTIONALITET: ett kort åt gången ---
 
 let currentlyFlippedCard = null;
 
@@ -80,5 +79,63 @@ document.querySelectorAll('.flip-card').forEach(card => {
             currentlyFlippedCard = null;
         }
     });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const form = document.getElementById("contactForm");
+
+    const introBtn = document.getElementById("introBtn");
+    const meeting30Btn = document.getElementById("meeting30Btn");
+
+    if (introBtn) {
+        introBtn.addEventListener("click", () => {
+            Calendly.initPopupWidget({
+                url: 'https://calendly.com/ugc-johannabredinger/ugc-intro-samtal'
+            });
+        });
+    }
+
+    if (meeting30Btn) {
+        meeting30Btn.addEventListener("click", () => {
+            Calendly.initPopupWidget({
+                url: 'https://calendly.com/ugc-johannabredinger/30min'
+            });
+        });
+    }
+
+    function showToast(message, color = "#c58c84") {
+        const toast = document.getElementById("toast");
+        toast.innerText = message;
+        toast.style.backgroundColor = color;
+        toast.classList.add("show");
+
+        setTimeout(() => {
+            toast.classList.remove("show");
+        }, 4000);
+    }
+
+    if (form) {
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const templateParams = {
+                name: form.name.value,
+                email: form.email.value,
+                message: form.message.value,
+            };
+
+            emailjs.send("service_j2jcwwd", "template_odrgb19", templateParams)
+                .then(() => {
+                    showToast("Tack! Ditt meddelande har skickats och du får ett bekräftelsemail", "#c58c84");
+                    form.reset();
+                })
+                .catch((err) => {
+                    console.log("EmailJS error:", err);
+                    showToast("Oj! Något gick fel. Försök igen senare", "#c58c84");
+                });
+        });
+    }
+
 });
 

@@ -52,6 +52,9 @@ nav a {
     font-size: 18px;
 }
 
+.main-menu :hover {
+    color: #c58c84;
+}
 
 .hero {
     text-align: center;
@@ -91,8 +94,6 @@ nav a {
     position: absolute;
 }
 
-
-/* texten hamnar ovanför overlay */
 .hero h2, .hero p, .hero .cta {
     position: relative;
 }
@@ -128,7 +129,7 @@ nav a {
 }
 
 .cta:hover {
-    background: #c5c5c5;
+    background: hotpink;
 }
 
 .services-grid {
@@ -340,13 +341,13 @@ nav a {
 }
 
 
-    .about-image {
+.about-image {
         position: relative;
         flex: 1;
         max-width: 360px;
-    }
+}
 
-    .about-image::before {
+.about-image::before {
         content: "";
         position: absolute;
         top: 20px;
@@ -357,9 +358,9 @@ nav a {
         border-radius: 18px;
         z-index: -1;
         filter: blur(1px);
-    }
+}
 
-    .about-image img {
+.about-image img {
         width: 100%;
         max-width: 300px;
         border-radius: 18px;
@@ -370,14 +371,14 @@ nav a {
         box-shadow: 
             0 8px 20px rgba(0,0,0,0.08),
             0 16px 40px rgba(0,0,0,0.06);
-    }
+}
 
-    .about-image img:hover {
+.about-image img:hover {
         transform: translateY(-4px);
         box-shadow: 
             0 12px 3opx rgba(0,0,0,0.12),
             0 20px 60px rgba(0,0,0,0.10);
-    }
+}
     
 
 .about-text {
@@ -438,6 +439,12 @@ nav a {
     display: flex;
     flex-direction: column;
     gap: 15px;
+}
+
+.contact-form button:hover {
+    background-color: hotpink;
+    color: white;
+
 }
 
 .contact-form input,
@@ -778,6 +785,61 @@ nav ul {
     margin-bottom: 70px;
     font-size: 16px;
     font-weight: 500;
+}
+
+.toast {
+    visibility: hidden;
+    min-width: 250px;
+    background-color: #c58c84;
+    color: white;
+    text-align: center;
+    border-radius: 10px;
+    padding: 16px;
+    position: fixed;
+    top: 40%;
+    right: 25%;
+    z-index: 1000;
+    font-size: 16px;
+    opacity: 0;
+    transition: opacity 0.5s, transform 0.5s;
+    transform: translateY(-20px);
+}
+
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.booking-buttons {
+    display: flex;
+    gap: 15px;          
+    flex-wrap: wrap;      
+    margin: 20px 0;
+}
+
+
+.booking-buttons button {
+    background-color: #c58c84; 
+    color: white;            
+    border: none;               
+    padding: 12px 25px;       
+    font-size: 16px;
+    border-radius: 8px;         
+    cursor: pointer;
+    transition: all 0.3s ease; 
+}
+
+
+.booking-buttons button:hover {
+    background-color: #a05e60;
+    transform: translateY(-2px);
+}
+
+
+.booking-buttons button:active {
+    transform: translateY(0);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
 }
 
 

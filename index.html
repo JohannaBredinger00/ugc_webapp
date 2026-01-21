@@ -7,11 +7,14 @@
 
     <link rel="preconnect" href="https://fonts.giigleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css" />
-    
 
+    <link rel="icon" href="images/initialerjb.png" type="image/png">
+
+
+    
 </head>
 <body>
 
@@ -217,37 +220,37 @@
                  </div>
     </section>
 
-    <!---
-    <section  id="brands" class="brands">
-        <h2>Företag jag jobbat med</h2>
-        <div class="brand-logos">
-            <img src="företagsbild1" alt="Företag1">
-            <img src="företagsbild2" alt="Företag2">
-            <img src="företagsbild3" alt="Företag3">
-            <img src="företagsbild4" alt="Företag4">
-            <img src="företagsbild5" alt="Företag5">
+
+  <section id="contact" class="contact">
+    <h2>Boka mig</h2>
+    <div class="contact-container">
+
+        <form class="contact-form" id="contactForm">
+            <input type="text" name="name" placeholder="Namn" required>
+            <input type="email" name="email" placeholder="E-post" required>
+            <textarea name="message" placeholder="Meddelande" required></textarea>
+            <button type="submit">Skicka</button>
+        </form>
+
+        <p id="formMessage" style="display: none; margin-top: 15px"></p>
+
+        <div class="booking-buttons">
+            <button id="introBtn">Boka Introsamtal</button>
+            <button id="meeting30Btn">Boka 30 min möte</button>
         </div>
-    </section>
-    --->
 
+        <div id="toast" class="toast"></div>
 
-    <section id="contact" class="contact">
-        <h2>Boka mig</h2>
-        <div class="contact-container">
-            <form class="text" name="name" placeholder="Namn" required>
-                <input type="email" name="email" placeholder="E-post" required>
-                <textarea name="message" placeholder="Meddelande" required></textarea>
-                <button type="submit">Skicka</button>
-            </form>
-            <div class="calendly">
-                <iframe src="https://calendly.com/min-länk" frameborder="0" scrolling="no"></iframe>
-            </div>
-        </div>
-    </section>
+    </div>
+</section>
 
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+emailjs.init("HElwQqVcjj0J-ge7-");
+</script>
 
-    
-    <script src="script.js"></script>
-    
+<script src="https://assets.calendly.com/assets/external/widget.js"></script>
+<script src="script.js"></script>
+
 </body>
 </html>
