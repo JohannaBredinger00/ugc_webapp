@@ -235,14 +235,20 @@
         <p id="formMessage" style="display: none; margin-top: 15px"></p>
 
         <div class="booking-buttons">
-            <button id="introBtn">Boka Introsamtal</button>
-            <button id="meeting30Btn">Boka 30 min möte</button>
+            <button type="button" id="introBtn">Boka Introsamtal</button>
+            <button type="button" id="meeting30Btn">Boka 30 min möte</button>
         </div>
 
         <div id="toast" class="toast"></div>
-
     </div>
 </section>
+
+<div id="calendlyModal" class="calendly-modal">
+    <div class="calendly-content">
+        <span class="close-modal">&times;</span>
+        <iframe id="calendlyFrame" src="" frameborder="0" scrolling="0"></iframe>
+    </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>

@@ -83,26 +83,63 @@ document.querySelectorAll('.flip-card').forEach(card => {
 
 document.addEventListener("DOMContentLoaded", function() {
 
-    const form = document.getElementById("contactForm");
+   /* const form = document.getElementById("contactForm");*/
 
     const introBtn = document.getElementById("introBtn");
     const meeting30Btn = document.getElementById("meeting30Btn");
+    const modal = document.getElementById("calendlyModal");
+    const iframe = document.getElementById("calendlyFrame");
+    const closeBtn = document.querySelector(".close-modal");
 
+    function openCalendly(url) {
+        iframe.src = url;
+        modal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+        }
+
+        function closeModal() {
+            modal.style.display = "none"
+            iframe.src = "";
+            document.body.style.overflow = "";
+        }
+        
     if (introBtn) {
-        introBtn.addEventListener("click", () => {
-            Calendly.initPopupWidget({
-                url: 'https://calendly.com/ugc-johannabredinger/ugc-intro-samtal'
-            });
+        introBtn.addEventListener("click", ()=> {
+            openCalendly("https://calendly.com/ugc-johannabredinger/ugc-intro-samtal");
         });
     }
 
-    if (meeting30Btn) {
+     if (meeting30Btn) {
         meeting30Btn.addEventListener("click", () => {
-            Calendly.initPopupWidget({
-                url: 'https://calendly.com/ugc-johannabredinger/30min'
-            });
+            openCalendly("https://calendly.com/ugc-johannabredinger/30min");
         });
     }
+
+    if (closeBtn) {
+        closeBtn.addEventListener("click", closeModal);
+    }
+
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+      /*document.body.style.overflow = "hidden";*/
+
+        //Calendly.initPopupWidget({ url });
+
+    }
+
+   
+        /*onst observer = new MutationObserver(() => {
+            const overlay = document.querySelector(".calendly-overlay");
+            if (!overlay) {
+                document.body.style.overflow = "";
+                observer.disconnect();
+            }
+        });*/
+    
+
+    );
 
     function showToast(message, color = "#c58c84") {
         const toast = document.getElementById("toast");
@@ -113,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function() {
         setTimeout(() => {
             toast.classList.remove("show");
         }, 4000);
-    }
+    
 
     if (form) {
         form.addEventListener("submit", function(e) {
@@ -136,6 +173,5 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
         });
     }
-
-});
+};
 
