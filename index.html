@@ -65,7 +65,7 @@
                         </div>
                     </div>
                     <div class="flip-card-back">
-                        <video src="videos/video6.MP4" muted></video>
+                        <video src="videos/video6.MP4" controls></video>
                     </div>
                 </div>
             </div>
@@ -220,10 +220,23 @@
                  </div>
     </section>
 
-
   <section id="contact" class="contact">
     <h2>Boka mig</h2>
     <div class="contact-container">
+
+        <div class="booking-buttons">
+            <button type="button" id="introBtn">Boka Introsamtal</button>
+            <button type="button" id="meeting30Btn">Boka 30 min möte</button>
+        </div>
+
+    <div id="calendlyModal" class="calendly-modal">
+        <div class="calendly-content">
+        <span class="close-modal">&times;</span>
+        <iframe id="calendlyFrame" src="" frameborder="0" scrolling="0"></iframe>
+    </div>
+</div>
+
+    <div class="write-message"> Eller skriv ett meddelande</div>
 
         <form class="contact-form" id="contactForm">
             <input type="text" name="name" placeholder="Namn" required>
@@ -231,24 +244,14 @@
             <textarea name="message" placeholder="Meddelande" required></textarea>
             <button type="submit">Skicka</button>
         </form>
+            
+        <div id="toast" class="toast"></div>
 
         <p id="formMessage" style="display: none; margin-top: 15px"></p>
 
-        <div class="booking-buttons">
-            <button type="button" id="introBtn">Boka Introsamtal</button>
-            <button type="button" id="meeting30Btn">Boka 30 min möte</button>
-        </div>
-
-        <div id="toast" class="toast"></div>
     </div>
 </section>
 
-<div id="calendlyModal" class="calendly-modal">
-    <div class="calendly-content">
-        <span class="close-modal">&times;</span>
-        <iframe id="calendlyFrame" src="" frameborder="0" scrolling="0"></iframe>
-    </div>
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>

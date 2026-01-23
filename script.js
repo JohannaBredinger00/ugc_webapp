@@ -65,25 +65,36 @@ document.querySelectorAll('.flip-card').forEach(card => {
         if(currentlyFlippedCard && currentlyFlippedCard !== card) {
             currentlyFlippedCard.classList.remove('flipped');
             const oldVideo = currentlyFlippedCard.querySelector('video');
-            if(oldVideo) oldVideo.pause();
+            if (oldVideo) {
+                oldVideo.pause();
+                oldVideo.currentTime = 0;
+                oldVideo.muted = true;
         }
+    }
 
         const isFlipped = card.classList.toggle('flipped');
 
         if(isFlipped) {
+            if (video) {
             video.currentTime = 0;
+            video.muted = false;
             video.play();
+            }
             currentlyFlippedCard = card;
         } else {
+            if (video) {
             video.pause();
+            video.currentTime = 0;
+            video.muted = true;
+            }
             currentlyFlippedCard = null;
         }
     });
 });
+    
+document.addEventListener("DOMContentLoaded", function () {
 
-document.addEventListener("DOMContentLoaded", function() {
-
-   /* const form = document.getElementById("contactForm");*/
+    const form = document.getElementById("contactForm");
 
     const introBtn = document.getElementById("introBtn");
     const meeting30Btn = document.getElementById("meeting30Btn");
@@ -95,21 +106,21 @@ document.addEventListener("DOMContentLoaded", function() {
         iframe.src = url;
         modal.style.display = "flex";
         document.body.style.overflow = "hidden";
-        }
+    }
 
-        function closeModal() {
-            modal.style.display = "none"
-            iframe.src = "";
-            document.body.style.overflow = "";
-        }
-        
+    function closeModal() {
+        modal.style.display = "none";
+        iframe.src = "";
+        document.body.style.overflow = "";
+    }
+
     if (introBtn) {
-        introBtn.addEventListener("click", ()=> {
+        introBtn.addEventListener("click", () => {
             openCalendly("https://calendly.com/ugc-johannabredinger/ugc-intro-samtal");
         });
     }
 
-     if (meeting30Btn) {
+    if (meeting30Btn) {
         meeting30Btn.addEventListener("click", () => {
             openCalendly("https://calendly.com/ugc-johannabredinger/30min");
         });
@@ -119,27 +130,11 @@ document.addEventListener("DOMContentLoaded", function() {
         closeBtn.addEventListener("click", closeModal);
     }
 
-    modal.addEventListener("click", (e) => {
-        if (e.target === modal) closeModal();
-    });
-
-      /*document.body.style.overflow = "hidden";*/
-
-        //Calendly.initPopupWidget({ url });
-
+    if (modal) {
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) closeModal();
+        });
     }
-
-   
-        /*onst observer = new MutationObserver(() => {
-            const overlay = document.querySelector(".calendly-overlay");
-            if (!overlay) {
-                document.body.style.overflow = "";
-                observer.disconnect();
-            }
-        });*/
-    
-
-    );
 
     function showToast(message, color = "#c58c84") {
         const toast = document.getElementById("toast");
@@ -150,10 +145,10 @@ document.addEventListener("DOMContentLoaded", function() {
         setTimeout(() => {
             toast.classList.remove("show");
         }, 4000);
-    
+    }
 
     if (form) {
-        form.addEventListener("submit", function(e) {
+        form.addEventListener("submit", function (e) {
             e.preventDefault();
 
             const templateParams = {
@@ -162,16 +157,20 @@ document.addEventListener("DOMContentLoaded", function() {
                 message: form.message.value,
             };
 
-            emailjs.send("service_j2jcwwd", "template_odrgb19", templateParams)
+            emailjs
+                .send("service_j2jcwwd", "template_odrgb19", templateParams)
                 .then(() => {
-                    showToast("Tack! Ditt meddelande har skickats och du får ett bekräftelsemail", "#c58c84");
+                    showToast(
+                        "Tack! Ditt meddelande har skickats och du får ett bekräftelsemail",
+                        "#c58c84"
+                    );
                     form.reset();
                 })
                 .catch((err) => {
-                    console.log("EmailJS error:", err);
+                    console.error("EmailJS error:", err);
                     showToast("Oj! Något gick fel. Försök igen senare", "#c58c84");
                 });
         });
     }
-};
+});
 

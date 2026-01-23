@@ -129,7 +129,7 @@ nav a {
 }
 
 .cta:hover {
-    background: hotpink;
+    background: #c58c84;
 }
 
 .services-grid {
@@ -418,7 +418,7 @@ nav a {
 .contact h2 {
     font-size: 26px;
     font-weight: 700;
-    margin-bottom: 50px;
+    margin-bottom: 65px;
 }
 
 .contact-container {
@@ -878,7 +878,7 @@ nav ul {
     border-radius: 10px;
     max-width: 600px;
     width: 90%;
-    height: 55%;
+    height: 90%;
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -898,6 +898,11 @@ nav ul {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
+}
+
+.write-message {
+    font-size: 20px;
+    font-weight: 700;
 }
 
 
