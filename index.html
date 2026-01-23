@@ -222,12 +222,24 @@
 
   <section id="contact" class="contact">
     <h2>Boka mig</h2>
+    <p>Välj det möte som passar dig bäst - enkelt och smidigt direkt online</p>
     <div class="contact-container">
 
         <div class="booking-buttons">
-            <button type="button" id="introBtn">Boka Introsamtal</button>
-            <button type="button" id="meeting30Btn">Boka 30 min möte</button>
-        </div>
+            <div class="booking-card" id="introBtn">
+            <!--<button type="button" id="introBtn">Boka Introsamtal</button> -->
+            <h3>Introsamtal</h3>
+            <p>15 min introduktion där vi går igenom era behov och mål</p>
+            <span class="card-cta">Boka nu</span>
+    </div>
+   
+        <div class="booking-card" id="meeting30Btn">
+            <!--<button type="button" id="meeting30Btn">Boka 30 min möte</button> -->
+            <h3>30 min möte</h3>
+            <p>Fördjupat 30 min möte för planering eller rådgivning</p>
+            <span class="card-cta">Boka nu</span>
+    </div>
+ </div>
 
     <div id="calendlyModal" class="calendly-modal">
         <div class="calendly-content">
@@ -235,6 +247,7 @@
         <iframe id="calendlyFrame" src="" frameborder="0" scrolling="0"></iframe>
     </div>
 </div>
+
 
     <div class="write-message"> Eller skriv ett meddelande</div>
 
