@@ -5,7 +5,6 @@ track.innerHTML += track.innerHTML;
 let speed = 0.5;
 let x = 0;
 
-
 function animateMarquee() {
     x -= speed;
     if (x <= -track.scrollWidth / 2) {
@@ -17,15 +16,19 @@ function animateMarquee() {
 
 animateMarquee();
 
-
 const overlay = document.getElementById("videoOverlay");
 const popupVideo = document.getElementById("popupVideo");
 const closeBtn = document.querySelector(".close-video");
 
 document.querySelectorAll(".video-trigger").forEach(item => {
-    item.addEventListener("click", () => {
-        const videoSrc = item.dataset.video;
-        popupVideo.src = videoSrc;
+    item.addEventListener("click", async () => {
+        const fileName = item.dataset.video;
+
+        // Hämta signed URL från backend
+        const response = await fetch(`/signed-url/${fileName}`);
+        const data = await response.json();
+        popupVideo.src = data.url;
+
         overlay.style.display = "flex";
 
         requestAnimationFrame(() => {
@@ -35,7 +38,6 @@ document.querySelectorAll(".video-trigger").forEach(item => {
         setTimeout(() => popupVideo.play(), 150);
     });
 });
-
 
 function closePopup() {
     overlay.classList.remove("active");
@@ -55,13 +57,15 @@ overlay.addEventListener("click", (e) => {
     if (e.target === overlay) closePopup();
 });
 
-
 let currentlyFlippedCard = null;
 
+// Flip-card med dynamisk signed URL
 document.querySelectorAll('.flip-card').forEach(card => {
-    card.addEventListener('click', () => {
+    card.addEventListener('click', async () => {
         const video = card.querySelector('video');
+        const fileName = card.dataset.video;
 
+        // Pausa och reset video på tidigare flip-card
         if(currentlyFlippedCard && currentlyFlippedCard !== card) {
             currentlyFlippedCard.classList.remove('flipped');
             const oldVideo = currentlyFlippedCard.querySelector('video');
@@ -69,33 +73,38 @@ document.querySelectorAll('.flip-card').forEach(card => {
                 oldVideo.pause();
                 oldVideo.currentTime = 0;
                 oldVideo.muted = true;
+                oldVideo.removeAttribute("src");
+            }
         }
-    }
 
         const isFlipped = card.classList.toggle('flipped');
 
         if(isFlipped) {
-            if (video) {
-            video.currentTime = 0;
-            video.muted = false;
-            video.play();
+            if(video && fileName) {
+                // Hämta signed URL från backend
+                const response = await fetch(`/signed-url/${fileName}`);
+                const data = await response.json();
+                video.src = data.url;
+
+                video.currentTime = 0;
+                video.muted = false;
+                video.play();
             }
             currentlyFlippedCard = card;
         } else {
-            if (video) {
-            video.pause();
-            video.currentTime = 0;
-            video.muted = true;
+            if(video) {
+                video.pause();
+                video.currentTime = 0;
+                video.muted = true;
+                video.removeAttribute("src"); // rensa URL
             }
             currentlyFlippedCard = null;
         }
     });
 });
-    
+
 document.addEventListener("DOMContentLoaded", function () {
-
     const form = document.getElementById("contactForm");
-
     const introBtn = document.getElementById("introBtn");
     const meeting30Btn = document.getElementById("meeting30Btn");
     const modal = document.getElementById("calendlyModal");
@@ -173,4 +182,3 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
-
