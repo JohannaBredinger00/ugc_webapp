@@ -22,6 +22,7 @@ const client = new S3Client({
   },
 });
 
+/*
 // Route som returnerar signed URL
 app.get("/signed-url/:fileName", async (req, res) => {
   try {
@@ -40,6 +41,7 @@ app.get("/signed-url/:fileName", async (req, res) => {
     res.status(500).json({ error: "Failed to generate signed URL" });
   }
 });
+*/
 
 // NY PROXY-ROUTE: Streamar video via servern
 app.get("/proxy-video/:fileName", async (req, res) => {
