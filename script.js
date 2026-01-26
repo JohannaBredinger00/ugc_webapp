@@ -1,7 +1,6 @@
 const track = document.getElementById('logoTrack');
 const renderUrl = "https://ugc-webapp.onrender.com";
 
-
 track.innerHTML += track.innerHTML;
 
 let speed = 0.5;
@@ -22,15 +21,13 @@ const overlay = document.getElementById("videoOverlay");
 const popupVideo = document.getElementById("popupVideo");
 const closeBtn = document.querySelector(".close-video");
 
+// POPUP VIDEO
 document.querySelectorAll(".video-trigger").forEach(item => {
-    item.addEventListener("click", async () => {
+    item.addEventListener("click", () => {
         const fileName = item.dataset.video;
 
-        // Hämta signed URL från backend
-        const response = await fetch(`${renderUrl}/signed-url/${fileName}`);
-        const data = await response.json();
         popupVideo.crossOrigin = "anonymous";
-        popupVideo.src = data.url;
+        popupVideo.src = `${renderUrl}/proxy-video/${fileName}`;
 
         overlay.style.display = "flex";
 
@@ -55,16 +52,15 @@ function closePopup() {
 }
 
 closeBtn.addEventListener("click", closePopup);
-
 overlay.addEventListener("click", (e) => {
     if (e.target === overlay) closePopup();
 });
 
 let currentlyFlippedCard = null;
 
-// Flip-card med dynamisk signed URL
+// FLIP-CARD VIDEO
 document.querySelectorAll('.flip-card').forEach(card => {
-    card.addEventListener('click', async () => {
+    card.addEventListener('click', () => {
         const video = card.querySelector('video');
         const fileName = card.dataset.video;
 
@@ -84,11 +80,8 @@ document.querySelectorAll('.flip-card').forEach(card => {
 
         if(isFlipped) {
             if(video && fileName) {
-                // Hämta signed URL från backend
-                const response = await fetch(`${renderUrl}/signed-url/${fileName}`);
-                const data = await response.json();
                 video.crossOrigin = "anonymous";
-                video.src = data.url;
+                video.src = `${renderUrl}/proxy-video/${fileName}`;
 
                 video.currentTime = 0;
                 video.muted = false;
@@ -107,6 +100,7 @@ document.querySelectorAll('.flip-card').forEach(card => {
     });
 });
 
+// CALENDLY & CONTACT FORM
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("contactForm");
     const introBtn = document.getElementById("introBtn");
@@ -127,62 +121,30 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.style.overflow = "";
     }
 
-    if (introBtn) {
-        introBtn.addEventListener("click", () => {
-            openCalendly("https://calendly.com/ugc-johannabredinger/ugc-intro-samtal");
-        });
-    }
-
-    if (meeting30Btn) {
-        meeting30Btn.addEventListener("click", () => {
-            openCalendly("https://calendly.com/ugc-johannabredinger/30min");
-        });
-    }
-
-    if (closeBtn) {
-        closeBtn.addEventListener("click", closeModal);
-    }
-
-    if (modal) {
-        modal.addEventListener("click", (e) => {
-            if (e.target === modal) closeModal();
-        });
-    }
+    if (introBtn) introBtn.addEventListener("click", () => openCalendly("https://calendly.com/ugc-johannabredinger/ugc-intro-samtal"));
+    if (meeting30Btn) meeting30Btn.addEventListener("click", () => openCalendly("https://calendly.com/ugc-johannabredinger/30min"));
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+    if (modal) modal.addEventListener("click", (e) => { if(e.target === modal) closeModal(); });
 
     function showToast(message, color = "#c58c84") {
         const toast = document.getElementById("toast");
         toast.innerText = message;
         toast.style.backgroundColor = color;
         toast.classList.add("show");
-
-        setTimeout(() => {
-            toast.classList.remove("show");
-        }, 4000);
+        setTimeout(() => toast.classList.remove("show"), 4000);
     }
 
     if (form) {
         form.addEventListener("submit", function (e) {
             e.preventDefault();
-
             const templateParams = {
                 name: form.name.value,
                 email: form.email.value,
                 message: form.message.value,
             };
-
-            emailjs
-                .send("service_j2jcwwd", "template_odrgb19", templateParams)
-                .then(() => {
-                    showToast(
-                        "Tack! Ditt meddelande har skickats och du får ett bekräftelsemail",
-                        "#c58c84"
-                    );
-                    form.reset();
-                })
-                .catch((err) => {
-                    console.error("EmailJS error:", err);
-                    showToast("Oj! Något gick fel. Försök igen senare", "#c58c84");
-                });
+            emailjs.send("service_j2jcwwd", "template_odrgb19", templateParams)
+                .then(() => { showToast("Tack! Ditt meddelande har skickats och du får ett bekräftelsemail"); form.reset(); })
+                .catch((err) => { console.error("EmailJS error:", err); showToast("Oj! Något gick fel. Försök igen senare"); });
         });
     }
 });
