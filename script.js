@@ -1,4 +1,6 @@
 const track = document.getElementById('logoTrack');
+const renderUrl = "https://ugc-webapp.onrender.com";
+
 
 track.innerHTML += track.innerHTML;
 
@@ -27,6 +29,7 @@ document.querySelectorAll(".video-trigger").forEach(item => {
         // Hämta signed URL från backend
         const response = await fetch(`${renderUrl}/signed-url/${fileName}`);
         const data = await response.json();
+        popupVideo.crossOrigin = "anonymous";
         popupVideo.src = data.url;
 
         overlay.style.display = "flex";
@@ -82,10 +85,9 @@ document.querySelectorAll('.flip-card').forEach(card => {
         if(isFlipped) {
             if(video && fileName) {
                 // Hämta signed URL från backend
-
-                const renderUrl = "https://ugc-webapp.onrender.com";
                 const response = await fetch(`${renderUrl}/signed-url/${fileName}`);
                 const data = await response.json();
+                video.crossOrigin = "anonymous";
                 video.src = data.url;
 
                 video.currentTime = 0;
