@@ -26,8 +26,8 @@ document.querySelectorAll(".video-trigger").forEach(item => {
     item.addEventListener("click", () => {
         const fileName = item.dataset.video;
 
-        popupVideo.crossOrigin = "anonymous";
         popupVideo.src = `${renderUrl}/proxy-video/${fileName}`;
+        video.crossOrigin = "anonymous";
 
         overlay.style.display = "flex";
 
@@ -80,9 +80,8 @@ document.querySelectorAll('.flip-card').forEach(card => {
 
         if(isFlipped) {
             if(video && fileName) {
-                video.crossOrigin = "anonymous";
                 video.src = `${renderUrl}/proxy-video/${fileName}`;
-
+                video.crossOrigin = "anonymous";
                 video.currentTime = 0;
                 video.muted = false;
                 video.play();

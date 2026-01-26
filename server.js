@@ -25,6 +25,7 @@ const client = new S3Client({
 /*
 // Route som returnerar signed URL
 app.get("/signed-url/:fileName", async (req, res) => {
+  
   try {
     const { fileName } = req.params;
 
