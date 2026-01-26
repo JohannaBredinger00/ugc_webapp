@@ -1,0 +1,28 @@
+
+{
+  "name": "ugc_webapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JohannaBredinger00/ugc_webapp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/JohannaBredinger00/ugc_webapp/issues"
+  },
+  "homepage": "https://github.com/JohannaBredinger00/ugc_webapp#readme",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.975.0",
+    "@aws-sdk/s3-request-presigner": "^3.975.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  }
+}

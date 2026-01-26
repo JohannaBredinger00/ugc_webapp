@@ -12,10 +12,10 @@ app.use(cors({ origin: "*" }));
 // Cloudflare R2 klient
 const client = new S3Client({
   region: "auto",
-  endpoint: "https://f87efb2122acf9eec3cdd22b7336cf4f.r2.cloudflarestorage.com", // byt till ditt account_id
+  endpoint: process.env.R2_ENDPOINT, // byt till ditt account_id
   credentials: {
-    accessKeyId: "0bed652b017d5ac49dccc412680fb259", // byt till dina keys
-    secretAccessKey: "4117047ab38929afcfb42d80a0bc748a4f747ff9b2d5e17a516aaccb9de8c012"
+    accessKeyId: process.env.R2_ACCESS_KEY_ID, // byt till dina keys
+    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY
   }
 });
 
