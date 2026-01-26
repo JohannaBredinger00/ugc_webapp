@@ -25,7 +25,7 @@ document.querySelectorAll(".video-trigger").forEach(item => {
         const fileName = item.dataset.video;
 
         // Hämta signed URL från backend
-        const response = await fetch(`/signed-url/${fileName}`);
+        const response = await fetch(`${renderUrl}/signed-url/${fileName}`);
         const data = await response.json();
         popupVideo.src = data.url;
 
@@ -82,7 +82,9 @@ document.querySelectorAll('.flip-card').forEach(card => {
         if(isFlipped) {
             if(video && fileName) {
                 // Hämta signed URL från backend
-                const response = await fetch(`/signed-url/${fileName}`);
+
+                const renderUrl = "https://ugc-webapp.onrender.com";
+                const response = await fetch(`${renderUrl}/signed-url/${fileName}`);
                 const data = await response.json();
                 video.src = data.url;
 
