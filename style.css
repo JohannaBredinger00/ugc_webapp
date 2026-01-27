@@ -16,8 +16,8 @@ body{
 }
 
 
-/*Navigation*/
 header{
+    
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -38,6 +38,7 @@ nav {
 }
 
 
+
 nav ul {
     display: flex;
     gap: 60px;
@@ -49,6 +50,12 @@ nav a {
     text-decoration: none;
     color: white;
     font-weight: 500;
+    font-size: 18px;
+}
+
+.main-menu a {
+    text-decoration: none;
+    font-weight: 600;
     font-size: 18px;
 }
 
@@ -162,7 +169,6 @@ nav a {
     position: relative;
     width: 100%;
     height: 100%;
-    /*text-align: center;*/
     transition: transform 0.8s;
     transform-style: preserve-3d;
 }
@@ -266,10 +272,8 @@ nav a {
     margin-top: 5px;
     object-fit: contain;
     border: 2px solid #c58c84;
-    
 }
     
-
 
 .flip-card-back {
     color: #2c2c2c;
@@ -408,38 +412,26 @@ nav a {
 
 
 .contact {
-    /*padding: 60px 20px;
-    background: #f7f5f2;*/
     text-align: center;
-    /*font-family: 'Arlia', sans-serif;*/
 }
 
 .contact h2 {
     font-size: 1.8rem;
-    /*font-weight: 700;*/
     margin-bottom: 10px;
 }
 
 .contact-container {
-    /*display: flex;
-    flex-wrap: wrap;
-    gap: 40px;
-    max-width: 90px;
-    margin: 0 auto;
-    justify-content: center;*/
     text-align: center;
 }
 
+
 .contact-form {
-    flex: 1;
-    min-width: 300px;
+    width: 100%;
+    max-width: 400px;
+    margin: 35px auto 30px auto;
     display: flex;
     flex-direction: column;
     gap: 15px;
-    max-width: 50px;
-    margin-left: 480px;
-    margin-top: 35px;
-    margin-bottom: 30px;
 }
 
 .contact-form button:hover {
@@ -499,12 +491,13 @@ nav ul {
 
 .social-icons {
     display: flex;
-    gap: 25px;
+    gap: 15px;
+    align-items: center;
 }
 
 .social-icons img {
-    width: 25px;
-    height: 25px;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
     transition: transform 0.3s ease, opacity 0.3ss ease;
 }
@@ -554,7 +547,6 @@ nav ul {
     transition: transform 0.35s ease, opacity 0.35s ease;
 }
 
-/* När aktiv */
 #videoOverlay.active .video-popup {
     transform: scale(1);
     opacity: 1;
@@ -623,7 +615,6 @@ nav ul {
 }
 
 
-
 .logo-track img.desenio {
     height: 20px;
 }
@@ -674,6 +665,7 @@ nav ul {
     opacity: 1;
     transform: scale(1.12);
 }
+
 
 .main-menu {
     display: flex;
@@ -859,33 +851,7 @@ nav ul {
     gap: 30px;          
     flex-wrap: wrap;      
     margin-top: 20px;
-    /*z-index: 10;*/
 }
-
-/*
-.booking-buttons button {
-    background-color: #c58c84; 
-    color: white;            
-    border: none;               
-    padding: 12px 25px;       
-    font-size: 16px;
-    border-radius: 8px;         
-    cursor: pointer;
-    transition: all 0.3s ease; 
-}
-    
-
-
-.booking-buttons button:hover {
-    background-color: #a05e60;
-    transform: translateY(-2px);
-}
-
-
-.booking-buttons button:active {
-    transform: translateY(0);
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
-}*/
 
 
 .calendly-popup {
