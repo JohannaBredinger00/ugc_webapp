@@ -2,12 +2,12 @@ import express from "express";
 import cors from "cors";
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import fetch from "node-fetch"; // för proxy-streaming
+import fetch from "node-fetch";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Tillåt frontend (för test kan du sätta "*")
+// Tillåt frontend
 app.use(cors({ origin: "*" }));
 
 // Cloudflare R2 klient
@@ -22,52 +22,50 @@ const client = new S3Client({
   },
 });
 
-/*
-// Route som returnerar signed URL
-app.get("/signed-url/:fileName", async (req, res) => {
-  
-  try {
-    const { fileName } = req.params;
-
-    const command = new GetObjectCommand({
-      Bucket: "ugc-videos",
-      Key: fileName,
-    });
-
-    // URL giltig 1 timme
-    const url = await getSignedUrl(client, command, { expiresIn: 3600 });
-    res.json({ url });
-  } catch (err) {
-    console.error("Error generating signed URL:", err);
-    res.status(500).json({ error: "Failed to generate signed URL" });
-  }
-});
-*/
-
-// NY PROXY-ROUTE: Streamar video via servern
+// Proxy-route med Range support
 app.get("/proxy-video/:fileName", async (req, res) => {
   try {
     const { fileName } = req.params;
+    const range = req.headers.range; // För mobil/video-buffring
 
+    if (!fileName) return res.status(400).send("File name is required");
+
+    // Hämta signed URL
     const command = new GetObjectCommand({
       Bucket: "ugc-videos",
       Key: fileName,
     });
-
-    // Generera signed URL
     const url = await getSignedUrl(client, command, { expiresIn: 3600 });
 
-    // Hämta videon från R2 och streama till klienten
+    // Hämta videon
     const videoResp = await fetch(url);
+    if (!videoResp.ok) throw new Error(`Failed to fetch video: ${videoResp.statusText}`);
 
-    if (!videoResp.ok) {
-      throw new Error(`Failed to fetch video: ${videoResp.statusText}`);
+    // Konvertera till Buffer för range-support
+    const videoBuffer = Buffer.from(await videoResp.arrayBuffer());
+    const videoSize = videoBuffer.length;
+
+    if (range) {
+      // Hantera range-request
+      const parts = range.replace(/bytes=/, "").split("-");
+      const start = parseInt(parts[0], 10);
+      const end = parts[1] ? parseInt(parts[1], 10) : videoSize - 1;
+
+      res.writeHead(206, {
+        "Content-Range": `bytes ${start}-${end}/${videoSize}`,
+        "Accept-Ranges": "bytes",
+        "Content-Length": end - start + 1,
+        "Content-Type": "video/mp4",
+      });
+      res.end(videoBuffer.slice(start, end + 1));
+    } else {
+      // Ingen range, skicka hela videon
+      res.writeHead(200, {
+        "Content-Length": videoSize,
+        "Content-Type": "video/mp4",
+      });
+      res.end(videoBuffer);
     }
-
-    // Sätt rätt content-type
-    res.setHeader("Content-Type", "video/mp4");
-    // Streama kroppen direkt till klienten
-    videoResp.body.pipe(res);
   } catch (err) {
     console.error("Error proxying video:", err);
     res.status(500).send("Failed to fetch video");

@@ -607,7 +607,11 @@ nav ul {
     gap: 80px;
     align-items: center;
     white-space: nowrap;
+    animation: scrollMarquee 20s linear infinite;
+    min-width: max-content;
 }
+
+
     
 
 .logo-track img {
@@ -616,6 +620,8 @@ nav ul {
     opacity: 0.75;
     transition: transform 0.3s ease, opacity 0.3s ease;
     opacity: 1;
+    flex-shrink: 0;
+    object-fit: contain;
 }
 
 .logo-track img:hover {
@@ -787,10 +793,15 @@ nav ul {
 }
 
 .video-overlay-text h4 {
-    margin-top: auto;
-    margin-bottom: 70px;
+    margin: 0;
+    margin-bottom: 20px;
     font-size: 16px;
     font-weight: 500;
+}
+
+.video-overlay-text p {
+    margin: 0;
+    font-size: 16px;
 }
 
 .toast {
@@ -999,12 +1010,13 @@ nav ul {
 
     .video-overlay-text p {
         font-size: 14px;
-        padding: 10px;
+        padding: 8px;
     }
 
     .video-overlay-text h4 {
+        margin-top: 0;
         font-size: 14px;
-        margin-bottom: 10px;
+        margin-bottom: 17px;
     }
 
     .hero-signature {
@@ -1014,9 +1026,9 @@ nav ul {
     }
 
     .logo-track {
-        gap: 30px;
+        gap: 20px;
         flex-wrap: nowrap;
-        overflow-x: hidden;
+        overflow-x: visible;
     }
 }
 

@@ -66,8 +66,8 @@ document.querySelectorAll('.flip-card').forEach(card => {
 
         // Pausa och reset video på tidigare flip-card
         if(currentlyFlippedCard && currentlyFlippedCard !== card) {
-            currentlyFlippedCard.classList.remove('flipped');
             const oldVideo = currentlyFlippedCard.querySelector('video');
+            currentlyFlippedCard.classList.remove('flipped');
             if (oldVideo) {
                 oldVideo.pause();
                 oldVideo.currentTime = 0;
@@ -82,8 +82,8 @@ document.querySelectorAll('.flip-card').forEach(card => {
             if(video && fileName) {
                 video.src = `${renderUrl}/proxy-video/${fileName}`;
                 video.crossOrigin = "anonymous";
-                video.currentTime = 0;
                 video.muted = false;
+                video.currentTime = 0;
                 video.play();
             }
             currentlyFlippedCard = card;
@@ -93,6 +93,9 @@ document.querySelectorAll('.flip-card').forEach(card => {
                 video.currentTime = 0;
                 video.muted = true;
                 video.removeAttribute("src"); // rensa URL
+                setTimeout(() => {
+                    video.removeAttribute("src");
+                }, 100);
             }
             currentlyFlippedCard = null;
         }
