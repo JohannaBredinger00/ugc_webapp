@@ -53,15 +53,18 @@ nav a {
     font-size: 18px;
 }
 
+
 .main-menu a {
     text-decoration: none;
     font-weight: 600;
     font-size: 18px;
+
 }
 
 .main-menu :hover {
     color: #c58c84;
 }
+
 
 .hero {
     text-align: center;
@@ -667,6 +670,7 @@ nav ul {
 }
 
 
+
 .main-menu {
     display: flex;
     gap: 50px;
@@ -674,6 +678,7 @@ nav ul {
     margin: 0;
     padding: 0;
 }
+
 
 .main-menu a {
     text-decoration: none;
@@ -919,6 +924,63 @@ nav ul {
     margin-top: 60px;
 }
 
+@media (max-width: 768px) {
+    header {
+        padding: 20px;
+    }
+
+    nav {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .main-menu {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px 25px;
+    }
+
+    .main-menu a {
+        font-size: 16px;
+    }
+
+    .social-icons {
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .flip-card {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 3 / 4;
+    }
+
+    .flip-card-front h3 {
+        font-size: 16px;
+    }
+
+    .hover-text p {
+        font-size: 14px;
+    }
+
+    .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .video-grid img {
+        width: 100%;
+        max-width: none;
+    }
+}
 
 
 
