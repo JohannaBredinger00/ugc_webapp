@@ -641,10 +641,11 @@ nav ul {
     height: 27px;
     opacity: 1 !important;
 }
-
+/*
 .logo-track img.nordkliv {
     height: 35px;
 }
+    */
 
 .logo-track img.desenio:hover {
     opacity: 1;
