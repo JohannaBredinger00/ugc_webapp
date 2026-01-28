@@ -1,3 +1,8 @@
+
+html, body {
+    overflow-x: hidden;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -631,6 +636,9 @@ nav ul {
     opacity: 1 !important;
 }
 
+.logo-track img.nordkliv {
+    height: 35px;
+}
 
 .logo-track img.desenio:hover {
     opacity: 1;
@@ -987,6 +995,28 @@ nav ul {
     .video-grid img {
         width: 100%;
         max-width: none;
+    }
+
+    .video-overlay-text p {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .video-overlay-text h4 {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .hero-signature {
+        max-width: 90%;
+        width: auto;
+        left: 5%;
+    }
+
+    .logo-track {
+        gap: 30px;
+        flex-wrap: nowrap;
+        overflow-x: hidden;
     }
 }
 
