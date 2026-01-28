@@ -959,8 +959,16 @@ nav ul {
 
     .flip-card {
         width: 100%;
-        height: auto;
-        aspect-ratio: 3 / 4;
+        height: 260px;
+    }
+
+    .flip-card-inner {
+        height: 100%;
+    }
+
+    .flip-card-front img {
+        height: 65%;
+        object-fit: cover;
     }
 
     .flip-card-front h3 {
