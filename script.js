@@ -28,6 +28,8 @@ document.querySelectorAll(".video-trigger").forEach(item => {
 
         popupVideo.src = `${renderUrl}/proxy-video/${fileName}`;
         video.crossOrigin = "anonymous";
+        popupVideo.setAttribute("playsinline", "");
+        popupVideo.setAttribute("muted", "");
 
         overlay.style.display = "flex";
 
@@ -82,7 +84,8 @@ document.querySelectorAll('.flip-card').forEach(card => {
             if(video && fileName) {
                 video.src = `${renderUrl}/proxy-video/${fileName}`;
                 video.crossOrigin = "anonymous";
-                video.muted = false;
+                video.muted = true; //stod som false innan
+                video.setAttribute("playsinline", ""); //detta är tillagt
                 video.currentTime = 0;
                 video.play();
             }

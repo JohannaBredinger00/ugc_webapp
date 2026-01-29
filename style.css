@@ -794,9 +794,9 @@ nav ul {
 }
 
 .video-overlay-text h4 {
-    margin: 0;
-    margin-bottom: 20px;
-    font-size: 16px;
+    margin-top: 0; /*tillagt*/
+    margin-bottom: 0; /*20px innan*/
+    font-size: 14px; /*16px innan*/
     font-weight: 500;
 }
 
@@ -813,20 +813,21 @@ nav ul {
     text-align: center;
     border-radius: 10px;
     padding: 16px;
-    position: fixed;
-    top: 40%;
-    right: 25%;
+    top: 50%; /* 40% innan*/
+   /* right: 25%;*/
+    left: 50%;
+    position: fixed; /*tillagt*/
+    transform: translate(-50%, -50%) translateY(-20px);
     z-index: 1000;
     font-size: 16px;
     opacity: 0;
     transition: opacity 0.5s, transform 0.5s;
-    transform: translateY(-20px);
 }
 
 .toast.show {
     visibility: visible;
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(-50%, -50%) translateY(0);
 }
 
 .booking-card {
