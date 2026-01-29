@@ -1,3 +1,5 @@
+/*const e = require("cors");*/
+
 const track = document.getElementById('logoTrack');
 const renderUrl = "https://ugc-webapp.onrender.com";
 
@@ -102,6 +104,15 @@ document.querySelectorAll('.flip-card').forEach(card => {
             }
             currentlyFlippedCard = null;
         }
+    });
+});
+
+document.querySelectorAll('.sound-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const video = btn.closest('.flip-card-back').querySelector('video');
+        video.muted = !video.muted;
+        btn.textContent = video.muted ? "🔇" : "🔊";
     });
 });
 

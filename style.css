@@ -1034,6 +1034,20 @@ nav ul {
     }
 }
 
+.sound-btn {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    font-size: 18px;
+    z-index: 10;
+}
+
 
 
 
