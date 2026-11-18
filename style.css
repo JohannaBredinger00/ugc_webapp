@@ -1252,3 +1252,150 @@ nav ul {
         padding: 4px 9px;
     }
 }
+
+/* ---------- Fix: korten blir inte bredare än skärmen ---------- */
+.flip-card-front,
+.flip-card-back {
+    box-sizing: border-box;
+}
+
+/* ---------- Referenser: citatet visas vid tryck på mobil ---------- */
+.video-trigger { cursor: pointer; }
+
+.video-trigger.show-text img {
+    filter: blur(5px) brightness(0.7);
+    transform: scale(1.05);
+}
+
+.video-trigger.show-text .video-overlay-text {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ---------- Bläddra mellan videor i popupen ---------- */
+.popup-nav {
+    display: none;
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 50%;
+    background: white;
+    color: #c58c84;
+    font-size: 30px;
+    line-height: 1;
+    padding-bottom: 4px;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.popup-nav.prev { left: -21px; }
+.popup-nav.next { right: -21px; }
+
+.popup-nav:hover {
+    background: #c58c84;
+    color: white;
+    transform: translateY(-50%) scale(1.08);
+}
+
+#videoOverlay.has-nav .popup-nav {
+    display: flex;
+}
+
+.popup-counter {
+    margin: 8px 0 2px;
+    font-size: 13px;
+    color: #6b5f5c;
+    text-align: center;
+}
+
+.popup-counter:empty {
+    display: none;
+}
+
+/* ---------- Karusell i "Mina videor" ---------- */
+.carousel {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.carousel .ugc-grid {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - 2 * 18px) / 3); /* 3 videor syns åt gången */
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: 8px 0 14px;
+    scrollbar-width: none;
+}
+
+.carousel .ugc-grid::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel .ugc-card {
+    scroll-snap-align: start;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    background: white;
+    color: #c58c84;
+    font-size: 30px;
+    line-height: 1;
+    padding-bottom: 4px;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.18);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s ease, background 0.2s ease;
+}
+
+.carousel-btn.prev { left: -22px; }
+.carousel-btn.next { right: -22px; }
+
+.carousel-btn:hover:not(:disabled) {
+    background: #c58c84;
+    color: white;
+}
+
+.carousel-btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+.carousel-btn[hidden] {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .carousel .ugc-grid {
+        grid-template-columns: none;
+        grid-auto-columns: calc((100% - 12px) / 2); /* 2 videor syns åt gången */
+    }
+
+    .carousel-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 24px;
+    }
+
+    .carousel-btn.prev { left: -8px; }
+    .carousel-btn.next { right: -8px; }
+}

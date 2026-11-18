@@ -80,7 +80,7 @@
     <!-- NY: VIDEOPORTFOLIO – videorna läggs till i script.js (listan VIDEOS) -->
     <section id="videos" class="videos">
         <h2>Mina videor</h2>
-        <p class="section-intro">Ett urval av UGC jag skapat. Klicka på en video för att se den med ljud.</p>
+        <p class="section-intro">Ett urval av UGC jag skapat. Bläddra med pilarna och klicka på en video för att se den med ljud.</p>
 
         <div class="video-filters" role="group" aria-label="Filtrera videor">
             <button type="button" class="filter-btn active" data-filter="Alla">Alla</button>
@@ -89,7 +89,11 @@
             <button type="button" class="filter-btn" data-filter="Lifestyle">Lifestyle</button>
         </div>
 
-        <div class="ugc-grid" id="ugcGrid"></div>
+        <div class="carousel">
+            <button type="button" class="carousel-btn prev" aria-label="Föregående videor">&#8249;</button>
+            <div class="ugc-grid" id="ugcGrid"></div>
+            <button type="button" class="carousel-btn next" aria-label="Nästa videor">&#8250;</button>
+        </div>
     </section>
 
     <section id="services" class="services">
@@ -152,7 +156,6 @@
                     </div>
                     <div class="flip-card-back">
                         <video controls muted playsinline crossorigin="anonymous"></video>
-                        <button class="sound-btn">🔊</button>
                     </div>
                 </div>
             </div>
@@ -211,7 +214,10 @@
     <div id="videoOverlay">
         <div class="video-popup">
             <span class="close-video">&times;</span>
+            <button type="button" class="popup-nav prev" aria-label="Föregående video">&#8249;</button>
             <video id="popupVideo" controls playsinline></video>
+            <button type="button" class="popup-nav next" aria-label="Nästa video">&#8250;</button>
+            <p class="popup-counter" aria-live="polite"></p>
         </div>
     </div>
 

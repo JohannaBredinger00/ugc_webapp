@@ -9,6 +9,12 @@ function videoUrl(fileName) {
     return `${VIDEO_BASE}/${encodeURIComponent(fileName)}`;
 }
 
+// Väck Render-servern direkt när sidan laddas, så att den är vaken
+// när besökaren klickar på en video (gratisplanen somnar annars).
+fetch(`${renderUrl}/health`).catch(() => {});
+
+const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
+
 // =====================================================================
 // MINA VIDEOR – lägg till en ny video genom att kopiera en rad.
 //   file:   filnamnet i din R2-bucket (exakt, med stora/små bokstäver)
@@ -47,7 +53,9 @@ const overlay = document.getElementById("videoOverlay");
 const popupVideo = document.getElementById("popupVideo");
 const closeBtn = document.querySelector(".close-video");
 
-function openPopup(url) {
+function openPopup(url, withNav = false) {
+    overlay.classList.toggle("has-nav", withNav);
+    if (!withNav) popupCounter.textContent = "";
     popupVideo.src = url;
     popupVideo.muted = false; // användaren klickade själv, så ljud är tillåtet
     popupVideo.playsInline = true;
@@ -83,12 +91,24 @@ document.addEventListener("keydown", (e) => {
 const grid = document.getElementById("ugcGrid");
 const filterButtons = document.querySelectorAll(".filter-btn");
 
+// Listan som visas just nu (efter filtrering) – används för att bläddra i popupen
+let currentList = [];
+let currentIndex = 0;
+
+function showVideoAt(index) {
+    currentIndex = (index + currentList.length) % currentList.length; // börjar om i början/slutet
+    const v = currentList[currentIndex];
+    openPopup(videoUrl(v.file), currentList.length > 1);
+    popupCounter.textContent = currentList.length > 1
+        ? `${currentIndex + 1} / ${currentList.length} · ${v.format} · ${v.niche}`
+        : "";
+}
+
 function renderVideos(filter = "Alla") {
     grid.innerHTML = "";
+    currentList = VIDEOS.filter(v => filter === "Alla" || v.niche === filter);
 
-    VIDEOS
-        .filter(v => filter === "Alla" || v.niche === filter)
-        .forEach(v => {
+    currentList.forEach((v, index) => {
             const card = document.createElement("button");
             card.type = "button";
             card.className = "ugc-card";
@@ -104,14 +124,34 @@ function renderVideos(filter = "Alla") {
                 <span class="ugc-label">${v.format} · ${v.niche}</span>
             `;
 
-            card.addEventListener("click", () => openPopup(videoUrl(v.file)));
+            card.addEventListener("click", () => showVideoAt(index));
             grid.appendChild(card);
         });
 
     if (!grid.children.length) {
         grid.innerHTML = `<p class="ugc-empty">Fler videor kommer snart.</p>`;
     }
+
+    grid.scrollLeft = 0;
+    requestAnimationFrame(updateCarouselButtons);
 }
+
+// ---------------- KARUSELL I "MINA VIDEOR" ----------------
+const carouselPrev = document.querySelector(".carousel-btn.prev");
+const carouselNext = document.querySelector(".carousel-btn.next");
+
+function updateCarouselButtons() {
+    const scrollable = grid.scrollWidth > grid.clientWidth + 2;
+    carouselPrev.hidden = carouselNext.hidden = !scrollable; // inga pilar om allt får plats
+    carouselPrev.disabled = grid.scrollLeft <= 2;
+    carouselNext.disabled = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 2;
+}
+
+carouselPrev.addEventListener("click", () => grid.scrollBy({ left: -grid.clientWidth, behavior: "smooth" }));
+carouselNext.addEventListener("click", () => grid.scrollBy({ left: grid.clientWidth, behavior: "smooth" }));
+grid.addEventListener("scroll", updateCarouselButtons, { passive: true });
+window.addEventListener("resize", updateCarouselButtons);
+window.addEventListener("load", updateCarouselButtons);
 
 filterButtons.forEach(btn => {
     btn.addEventListener("click", () => {
@@ -123,6 +163,32 @@ filterButtons.forEach(btn => {
 
 renderVideos();
 
+// ---------------- BLÄDDRA I POPUPEN ----------------
+const prevBtn = document.querySelector(".popup-nav.prev");
+const nextBtn = document.querySelector(".popup-nav.next");
+const popupCounter = document.querySelector(".popup-counter");
+
+prevBtn.addEventListener("click", (e) => { e.stopPropagation(); showVideoAt(currentIndex - 1); });
+nextBtn.addEventListener("click", (e) => { e.stopPropagation(); showVideoAt(currentIndex + 1); });
+
+// Piltangenterna på datorn
+document.addEventListener("keydown", (e) => {
+    if (!overlay.classList.contains("has-nav") || overlay.style.display !== "flex") return;
+    if (e.key === "ArrowRight") showVideoAt(currentIndex + 1);
+    if (e.key === "ArrowLeft") showVideoAt(currentIndex - 1);
+});
+
+// Svep åt vänster/höger i mobilen
+let touchStartX = null;
+const popupBox = document.querySelector(".video-popup");
+popupBox.addEventListener("touchstart", (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+popupBox.addEventListener("touchend", (e) => {
+    if (touchStartX === null || !overlay.classList.contains("has-nav")) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 50) showVideoAt(currentIndex + (dx < 0 ? 1 : -1));
+    touchStartX = null;
+});
+
 // ---------------- FLIP-CARD-VIDEO ----------------
 let currentlyFlippedCard = null;
 
@@ -130,6 +196,12 @@ document.querySelectorAll('.flip-card').forEach(card => {
     card.addEventListener('click', () => {
         const video = card.querySelector('video');
         const fileName = card.dataset.video;
+
+        // På mobil: öppna videon i popup-fönstret i stället för att vända kortet
+        if (isMobile()) {
+            if (fileName) openPopup(videoUrl(fileName));
+            return;
+        }
 
         // Pausa och nollställ video på tidigare flip-card
         if (currentlyFlippedCard && currentlyFlippedCard !== card) {
@@ -165,12 +237,13 @@ document.querySelectorAll('.flip-card').forEach(card => {
     });
 });
 
-document.querySelectorAll('.sound-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const video = btn.closest('.flip-card-back').querySelector('video');
-        video.muted = !video.muted;
-        btn.textContent = video.muted ? "🔇" : "🔊";
+// ---------------- REFERENSER: visa citatet vid tryck (mobil) ----------------
+document.querySelectorAll('.video-trigger').forEach(item => {
+    item.addEventListener('click', () => {
+        const wasOpen = item.classList.contains('show-text');
+        document.querySelectorAll('.video-trigger.show-text')
+            .forEach(el => el.classList.remove('show-text'));
+        if (!wasOpen) item.classList.add('show-text');
     });
 });
 
