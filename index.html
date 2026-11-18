@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-    <title>Johanna Bredinger</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Johanna Bredinger – UGC-kreatör inom träning, skönhet & lifestyle</title>
+    <meta name="description" content="UGC-kreatör i Malmö/Köpenhamn. Autentiska videor för paid ads, testimonials och kampanjer inom träning, skönhet och lifestyle.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,9 +13,6 @@
     <link rel="stylesheet" href="style.css" />
 
     <link rel="icon" href="images/initialerjb.png" type="image/png">
-
-
-    
 </head>
 <body>
 
@@ -23,16 +21,17 @@
             <div class="nav-right"></div>
             <ul class="main-menu">
                 <li><a href="#hero">Hem</a></li>
+                <li><a href="#videos">Videor</a></li>
                 <li><a href="#services">Vad jag erbjuder</a></li>
                 <li><a href="#portfolio">Referenser</a></li>
                 <li><a href="#about">Om mig</a></li>
                 <li><a href="#contact">Boka mig</a></li>
             </ul>
             <div class="social-icons">
-                <a href="https://instagram.com/johannabredinger" target="_blank">
+                <a href="https://instagram.com/johannabredinger" target="_blank" rel="noopener">
                     <img src="images/instagram.svg" alt="Instagram">
                 </a>
-                <a href="https://tiktok.com/@johannabredinger" target="_blank">
+                <a href="https://tiktok.com/@johannabredinger" target="_blank" rel="noopener">
                     <img src="images/tiktok.svg" alt="TikTok">
                 </a>
             </div>
@@ -41,9 +40,56 @@
 
     <section id="hero" class="hero">
         <h2>Jag skapar innehåll som bygger förtroende och driver köp</h2>
-        <p>Autentiskt. Kreataivt. Strategiskt.</p>
-        <a href="#portfolio" class="cta">Se mina videor</a>
+        <p>Autentiskt. Kreativt. Strategiskt.</p>
+        <a href="#videos" class="cta">Se mina videor</a>
+        <p class="hero-trust">UGC för Desenio, Smitten, Björk Hair, Airup m.fl.</p>
         <img src="images/signatur/signatur.png" alt="Signatur" class="hero-signature">
+    </section>
+
+    <!-- LOGOS – flyttad upp direkt under hero -->
+    <section class="logos" aria-label="Varumärken jag samarbetat med">
+        <div class="logo-marquee">
+            <div class="logo-track" id="logoTrack">
+                <img src="images/logos/airup.png" alt="Airup">
+                <img src="images/logos/smartshake.png" class="smartshake" alt="Smartshake">
+                <img src="images/logos/desenio.png" class="desenio" alt="Desenio">
+                <img src="images/logos/stepler.png" class="stepler" alt="Stepler">
+                <img src="images/logos/smitten.jpg" alt="Smitten">
+                <img src="images/logos/bjorkhair.webp" class="bjorkhair" alt="Björk Hair">
+                <img src="images/logos/gos.png" alt="Glam of Sweden">
+
+                <img src="images/logos/airup.png" alt="">
+                <img src="images/logos/smartshake.png" class="smartshake" alt="">
+                <img src="images/logos/desenio.png" class="desenio" alt="">
+                <img src="images/logos/stepler.png" class="stepler" alt="">
+                <img src="images/logos/smitten.jpg" alt="">
+                <img src="images/logos/bjorkhair.webp" class="bjorkhair" alt="">
+                <img src="images/logos/gos.png" alt="">
+
+                <img src="images/logos/airup.png" alt="">
+                <img src="images/logos/smartshake.png" class="smartshake" alt="">
+                <img src="images/logos/desenio.png" class="desenio" alt="">
+                <img src="images/logos/stepler.png" class="stepler" alt="">
+                <img src="images/logos/smitten.jpg" alt="">
+                <img src="images/logos/bjorkhair.webp" class="bjorkhair" alt="">
+                <img src="images/logos/gos.png" alt="">
+            </div>
+        </div>
+    </section>
+
+    <!-- NY: VIDEOPORTFOLIO – videorna läggs till i script.js (listan VIDEOS) -->
+    <section id="videos" class="videos">
+        <h2>Mina videor</h2>
+        <p class="section-intro">Ett urval av UGC jag skapat. Klicka på en video för att se den med ljud.</p>
+
+        <div class="video-filters" role="group" aria-label="Filtrera videor">
+            <button type="button" class="filter-btn active" data-filter="Alla">Alla</button>
+            <button type="button" class="filter-btn" data-filter="Skönhet">Skönhet</button>
+            <button type="button" class="filter-btn" data-filter="Träning">Träning</button>
+            <button type="button" class="filter-btn" data-filter="Lifestyle">Lifestyle</button>
+        </div>
+
+        <div class="ugc-grid" id="ugcGrid"></div>
     </section>
 
     <section id="services" class="services">
@@ -54,12 +100,12 @@
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
                         <h3>Testimonial/Review</h3>
-                        <img src="thumbnails/snatched.jpg" alt="thumbnail">
+                        <img src="thumbnails/snatched.jpg" alt="Testimonial-video">
                         <div class="hover-text">
                             <div class="center-text">
                               <p>Jag skapar professionella och övertygande testimonials som visar kunders
-                                verkliga erfarenheter - stärker förtroendet och ökar konverteringar.
-                            </p>  
+                                verkliga erfarenheter – stärker förtroendet och ökar konverteringar.
+                            </p>
                             </div>
                             <h4>Klicka här för en preview</h4>
                         </div>
@@ -74,10 +120,10 @@
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
                         <h3>Paid Ads</h3>
-                        <img src="thumbnails/hellomela.jpg" alt="thumbnail">
+                        <img src="thumbnails/hellomela.jpg" alt="Paid ad-video">
                         <div class="hover-text">
                             <div class="center-text">
-                            <p>Jag skapar och optimerar betalda annonser på socialamedier för att snabbt
+                            <p>Jag skapar och optimerar betalda annonser på sociala medier för att snabbt
                                 nå rätt målgrupp, öka trafik, leads och försäljning.
                             </p>
                             </div>
@@ -94,7 +140,7 @@
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
                         <h3>Campaigns</h3>
-                        <img src="thumbnails/glamofsweden.jpg" alt="thumbnail">
+                        <img src="thumbnails/glamofsweden.jpg" alt="Kampanjvideo">
                         <div class="hover-text">
                             <div class="center-text">
                             <p>Jag skapar kreativt och strategiskt innehåll som engagerar din målgrupp,
@@ -111,13 +157,13 @@
                 </div>
             </div>
         </div>
-
+    </section>
 
     <section id="portfolio" class="portfolio">
         <h2>Referenser</h2>
         <div class="video-grid">
             <div class="video-trigger">
-                <img src="thumbnails/smitten.jpg" alt="smitten">
+                <img src="thumbnails/smitten.jpg" alt="Smitten">
                 <div class="video-overlay-text">
                     <div class="center-text">
                      <p>"Vi älskar ditt content - så bra jobbat!! Tack för ett så smidigt samarbete, vi hör mer än gärna av oss i framtiden"
@@ -126,125 +172,97 @@
                     <h4>~Smitten</h4>
                 </div>
             </div>
-                <div class="video-trigger">
-                    <img src="thumbnails/nips.jpg" alt="Nips">
-                    <div class="video-overlay-text">
-                        <div class="center-text">
-                            <p>"Stort tack för fin video. Kanon att du gjorde en tydlig hook i  början
-                            och en CTA i slutet samt visade före och efter i olika plagg"
-                        </p>
-                        </div>
-                        <h4>~Nips</h4>
+            <div class="video-trigger">
+                <img src="thumbnails/nips.jpg" alt="Nips">
+                <div class="video-overlay-text">
+                    <div class="center-text">
+                        <p>"Stort tack för fin video. Kanon att du gjorde en tydlig hook i början
+                        och en CTA i slutet samt visade före och efter i olika plagg"
+                    </p>
                     </div>
+                    <h4>~Nips</h4>
                 </div>
+            </div>
 
-                <div class="video-trigger">
-                    <img src="thumbnails/bjorkhair.jpg" alt="bjorkhair">
-                    <div class="video-overlay-text">
-                        <div class="center-text">
-                            <p>"Vi har kikat på din reel om LAGA och tycker den är toppen! Jättefint jobb!"
-                        </p>
-                        </div>
-                        <h4>~Björk Hair</h4>
+            <div class="video-trigger">
+                <img src="thumbnails/bjorkhair.jpg" alt="Björk Hair">
+                <div class="video-overlay-text">
+                    <div class="center-text">
+                        <p>"Vi har kikat på din reel om LAGA och tycker den är toppen! Jättefint jobb!"
+                    </p>
                     </div>
+                    <h4>~Björk Hair</h4>
                 </div>
+            </div>
 
-                <div class="video-trigger">
-                    <img src="thumbnails/thumbnail_IMG_2319.jpg" alt="Desenio">
-                    <div class="video-overlay-text">
-                        <div class="center-text">
-                            <p>"Tack för samarbetet, det ser jättefin ut!"
-                        </p>
-                        </div>
-                        <h4>~Desenio</h4>
+            <div class="video-trigger">
+                <img src="thumbnails/thumbnail_IMG_2319.jpg" alt="Desenio">
+                <div class="video-overlay-text">
+                    <div class="center-text">
+                        <p>"Tack för samarbetet, det ser jättefint ut!"
+                    </p>
                     </div>
+                    <h4>~Desenio</h4>
                 </div>
+            </div>
         </div>
     </section>
 
-    
     <div id="videoOverlay">
         <div class="video-popup">
             <span class="close-video">&times;</span>
-            <video id="popupVideo" controls></video>
+            <video id="popupVideo" controls playsinline></video>
         </div>
     </div>
 
     <section id="about" class="about">
-
         <div class="about-container">
             <div class="about-image">
-                <img src="thumbnails/thumbnail_IMG_9778.jpg" alt="Profilbild">
+                <img src="thumbnails/thumbnail_IMG_9778.jpg" alt="Johanna Bredinger">
             </div>
             <div class="about-text">
                 <h2>Om Johanna</h2>
-                <p>Jag är en UGC-kreatör som hjälper varumärken att skapa autentiskt och engagerande content som bygger förtroende och konverterar.
-                    Med erfarenhet av sociala medier, storytelling och videoannonsering ser jag till att varje projekt får maximal effekt.</p>
-                    <div class="social-links">
-                        <a href="https://instagram.com/johannabredinger" target="_blank">Instagram</a>
-                        <a href="https://tiktok.com/@johannabredinger" target="_blank">TikTok</a>
-                    </div>
+                <p>Jag är UGC-kreatör baserad i Malmö/Köpenhamn och har skapat innehåll för varumärken inom träning, skönhet och lifestyle i två år.
+                    Jag gör videor som känns äkta och inte som reklam – med en tydlig hook, en naturlig produktdemo och en CTA som driver köp.</p>
+                <p>Med bakgrund inom projektledning är jag strukturerad, håller deadlines och gör samarbetet smidigt från brief till leverans.</p>
+                <div class="social-links">
+                    <a href="https://instagram.com/johannabredinger" target="_blank" rel="noopener">Instagram</a>
+                    <a href="https://tiktok.com/@johannabredinger" target="_blank" rel="noopener">TikTok</a>
+                </div>
             </div>
         </div>
-
-                <div class="logo-marquee">
-                    <div class="logo-track" id="logoTrack">
-                        <img src="images/logos/airup.png" alt="">
-                        <img src="images/logos/smartshake.png" class="smartshake" alt="Smartshake">
-                        <img src="images/logos/desenio.png" class="desenio" alt="Desenio">
-                        <img src="images/logos/stepler.png" class="stepler" alt="Stepler">
-                        <img src="images/logos/smitten.jpg" alt="smitten">
-                        <img src="images/logos/bjorkhair.webp" class="bjorkhair">
-                        <img src="images/logos/gos.png" alt="glamofsweden">
-
-                        <img src="images/logos/airup.png" alt="">
-                        <img src="images/logos/smartshake.png" class="smartshake" alt="Smartshake">
-                        <img src="images/logos/desenio.png" class="desenio" alt="Desenio">
-                        <img src="images/logos/stepler.png" class="stepler" alt="Stepler">
-                        <img src="images/logos/smitten.jpg" alt="smitten">
-                        <img src="images/logos/bjorkhair.webp" class="bjorkhair">
-                        <img src="images/logos/gos.png" alt="glamofsweden">
-
-                        
-                        <img src="images/logos/airup.png" alt="">
-                        <img src="images/logos/smartshake.png" class="smartshake" alt="Smartshake">
-                        <img src="images/logos/desenio.png" class="desenio" alt="Desenio">
-                        <img src="images/logos/stepler.png" class="stepler" alt="Stepler">
-                        <img src="images/logos/smitten.jpg" alt="smitten">
-                        <img src="images/logos/bjorkhair.webp" class="bjorkhair">
-                        <img src="images/logos/gos.png" alt="glamofsweden">
-                     </div>
-                 </div>
     </section>
 
   <section id="contact" class="contact">
     <h2>Boka mig</h2>
-    <p>Välj det möte som passar dig bäst - enkelt och smidigt direkt online</p>
+    <p>Välj det möte som passar dig bäst – enkelt och smidigt direkt online</p>
+    <p class="price-note">Priser på förfrågan – jag sätter ihop paket efter era behov och budget.</p>
     <div class="contact-container">
 
         <div class="booking-buttons">
             <div class="booking-card" id="introBtn">
-            <h3>Introsamtal</h3>
-            <p>15 min introduktion där vi går igenom era behov och mål</p>
-            <span class="card-cta">Boka nu</span>
-    </div>
-   
-        <div class="booking-card" id="meeting30Btn">
-            <h3>30 min möte</h3>
-            <p>Fördjupat 30 min möte för planering eller rådgivning</p>
-            <span class="card-cta">Boka nu</span>
-    </div>
- </div>
+                <h3>Introsamtal</h3>
+                <p>15 min introduktion där vi går igenom era behov och mål</p>
+                <span class="card-cta">Boka nu</span>
+            </div>
 
-    <div id="calendlyModal" class="calendly-modal">
-        <div class="calendly-content">
-        <span class="close-modal">&times;</span>
-        <iframe id="calendlyFrame" src="" frameborder="0" scrolling="0"></iframe>
-    </div>
-</div>
+            <div class="booking-card" id="meeting30Btn">
+                <h3>30 min möte</h3>
+                <p>Fördjupat 30 min möte för planering eller rådgivning</p>
+                <span class="card-cta">Boka nu</span>
+            </div>
+        </div>
 
+        <div id="calendlyModal" class="calendly-modal">
+            <div class="calendly-content">
+                <span class="close-modal">&times;</span>
+                <iframe id="calendlyFrame" src="" frameborder="0" scrolling="0"></iframe>
+            </div>
+        </div>
 
-    <div class="write-message"> Eller skriv ett meddelande</div>
+        <p class="contact-email">Hellre mejl? <a href="mailto:ugc@johannabredinger.se">ugc@johannabredinger.se</a></p>
+
+        <div class="write-message">Eller skriv ett meddelande</div>
 
         <form class="contact-form" id="contactForm">
             <input type="text" name="name" placeholder="Namn" required>
@@ -252,14 +270,17 @@
             <textarea name="message" placeholder="Meddelande" required></textarea>
             <button type="submit">Skicka</button>
         </form>
-            
+
         <div id="toast" class="toast"></div>
 
         <p id="formMessage" style="display: none; margin-top: 15px"></p>
-
     </div>
-</section>
+  </section>
 
+  <footer class="site-footer">
+      <p><a href="mailto:ugc@johannabredinger.se">ugc@johannabredinger.se</a> · Malmö/Köpenhamn</p>
+      <p>© 2026 Johanna Bredinger</p>
+  </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>

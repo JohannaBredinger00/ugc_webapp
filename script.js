@@ -1,8 +1,32 @@
-/*const e = require("cors");*/
-
-const track = document.getElementById('logoTrack');
 const renderUrl = "https://ugc-webapp.onrender.com";
 
+// Var videorna hämtas ifrån.
+// Om du kopplar en egen domän till din R2-bucket (t.ex. media.johannabredinger.se)
+// byter du bara den här raden till: const VIDEO_BASE = "https://media.johannabredinger.se";
+const VIDEO_BASE = `${renderUrl}/proxy-video`;
+
+function videoUrl(fileName) {
+    return `${VIDEO_BASE}/${encodeURIComponent(fileName)}`;
+}
+
+// =====================================================================
+// MINA VIDEOR – lägg till en ny video genom att kopiera en rad.
+//   file:   filnamnet i din R2-bucket (exakt, med stora/små bokstäver)
+//   poster: miniatyrbild (valfri men rekommenderas – laddar mycket snabbare)
+//   format: t.ex. "Paid ad", "Testimonial", "Unboxing", "GRWM", "Produktdemo"
+//   niche:  "Skönhet", "Träning" eller "Lifestyle" (styr filterknapparna)
+//   brand:  varumärket (visas i alt-texten)
+// Den första videon i listan visas först – lägg din starkaste där.
+// =====================================================================
+const VIDEOS = [
+    { file: "gallery-1786021265354.MP4", poster: "thumbnails/glamofsweden.jpg", format: "Kampanj", niche: "Skönhet", brand: "Glam of Sweden" },
+    { file: "copy_131E8181-0CDB-42A5-8AFA-D9C017431573.MOV", poster: "thumbnails/hellomela.jpg", format: "Paid ad", niche: "Lifestyle", brand: "Hellomela" },
+    { file: "video6.MP4", poster: "thumbnails/snatched.jpg", format: "Testimonial", niche: "Träning", brand: "Snatched" },
+    // { file: "DITT-FILNAMN.mp4", poster: "thumbnails/DIN-BILD.jpg", format: "Unboxing", niche: "Lifestyle", brand: "Varumärke" },
+];
+
+// ---------------- LOGO-MARQUEE ----------------
+const track = document.getElementById('logoTrack');
 track.innerHTML += track.innerHTML;
 
 let speed = 0.5;
@@ -16,32 +40,23 @@ function animateMarquee() {
     track.style.transform = `translateX(${x}px)`;
     requestAnimationFrame(animateMarquee);
 }
-
 animateMarquee();
 
+// ---------------- POPUP-VIDEO ----------------
 const overlay = document.getElementById("videoOverlay");
 const popupVideo = document.getElementById("popupVideo");
 const closeBtn = document.querySelector(".close-video");
 
-// POPUP VIDEO
-document.querySelectorAll(".video-trigger").forEach(item => {
-    item.addEventListener("click", () => {
-        const fileName = item.dataset.video;
+function openPopup(url) {
+    popupVideo.src = url;
+    popupVideo.muted = false; // användaren klickade själv, så ljud är tillåtet
+    popupVideo.playsInline = true;
 
-        popupVideo.src = `${renderUrl}/proxy-video/${fileName}`;
-        video.crossOrigin = "anonymous";
-        popupVideo.setAttribute("playsinline", "");
-        popupVideo.setAttribute("muted", "");
+    overlay.style.display = "flex";
+    requestAnimationFrame(() => overlay.classList.add("active"));
 
-        overlay.style.display = "flex";
-
-        requestAnimationFrame(() => {
-            overlay.classList.add("active");
-        });
-
-        setTimeout(() => popupVideo.play(), 150);
-    });
-});
+    popupVideo.play().catch(() => { /* vissa mobiler kräver ett extra tryck på play */ });
+}
 
 function closePopup() {
     overlay.classList.remove("active");
@@ -50,6 +65,7 @@ function closePopup() {
 
     setTimeout(() => {
         popupVideo.removeAttribute("src");
+        popupVideo.load();
         overlay.classList.remove("closing");
         overlay.style.display = "none";
     }, 300);
@@ -59,48 +75,90 @@ closeBtn.addEventListener("click", closePopup);
 overlay.addEventListener("click", (e) => {
     if (e.target === overlay) closePopup();
 });
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && overlay.style.display === "flex") closePopup();
+});
 
+// ---------------- VIDEOPORTFOLIO ----------------
+const grid = document.getElementById("ugcGrid");
+const filterButtons = document.querySelectorAll(".filter-btn");
+
+function renderVideos(filter = "Alla") {
+    grid.innerHTML = "";
+
+    VIDEOS
+        .filter(v => filter === "Alla" || v.niche === filter)
+        .forEach(v => {
+            const card = document.createElement("button");
+            card.type = "button";
+            card.className = "ugc-card";
+            card.setAttribute("aria-label", `Spela ${v.format} för ${v.brand}`);
+
+            const media = v.poster
+                ? `<img src="${v.poster}" alt="${v.format} för ${v.brand}" loading="lazy">`
+                : `<video src="${videoUrl(v.file)}#t=0.1" preload="metadata" muted playsinline></video>`;
+
+            card.innerHTML = `
+                ${media}
+                <span class="ugc-play" aria-hidden="true">▶</span>
+                <span class="ugc-label">${v.format} · ${v.niche}</span>
+            `;
+
+            card.addEventListener("click", () => openPopup(videoUrl(v.file)));
+            grid.appendChild(card);
+        });
+
+    if (!grid.children.length) {
+        grid.innerHTML = `<p class="ugc-empty">Fler videor kommer snart.</p>`;
+    }
+}
+
+filterButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        filterButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        renderVideos(btn.dataset.filter);
+    });
+});
+
+renderVideos();
+
+// ---------------- FLIP-CARD-VIDEO ----------------
 let currentlyFlippedCard = null;
 
-// FLIP-CARD VIDEO
 document.querySelectorAll('.flip-card').forEach(card => {
     card.addEventListener('click', () => {
         const video = card.querySelector('video');
         const fileName = card.dataset.video;
 
-        // Pausa och reset video på tidigare flip-card
-        if(currentlyFlippedCard && currentlyFlippedCard !== card) {
+        // Pausa och nollställ video på tidigare flip-card
+        if (currentlyFlippedCard && currentlyFlippedCard !== card) {
             const oldVideo = currentlyFlippedCard.querySelector('video');
             currentlyFlippedCard.classList.remove('flipped');
             if (oldVideo) {
                 oldVideo.pause();
-                oldVideo.currentTime = 0;
                 oldVideo.muted = true;
                 oldVideo.removeAttribute("src");
+                oldVideo.load();
             }
         }
 
         const isFlipped = card.classList.toggle('flipped');
 
-        if(isFlipped) {
-            if(video && fileName) {
-                video.src = `${renderUrl}/proxy-video/${fileName}`;
-                video.crossOrigin = "anonymous";
-                video.muted = true; //stod som false innan
-                video.setAttribute("playsinline", ""); //detta är tillagt
-                video.currentTime = 0;
-                video.play();
+        if (isFlipped) {
+            if (video && fileName) {
+                video.src = videoUrl(fileName);
+                video.muted = true;
+                video.playsInline = true;
+                video.play().catch(() => {});
             }
             currentlyFlippedCard = card;
         } else {
-            if(video) {
+            if (video) {
                 video.pause();
-                video.currentTime = 0;
                 video.muted = true;
-                video.removeAttribute("src"); // rensa URL
-                setTimeout(() => {
-                    video.removeAttribute("src");
-                }, 100);
+                video.removeAttribute("src");
+                video.load();
             }
             currentlyFlippedCard = null;
         }
@@ -116,14 +174,14 @@ document.querySelectorAll('.sound-btn').forEach(btn => {
     });
 });
 
-// CALENDLY & CONTACT FORM
+// ---------------- CALENDLY & KONTAKTFORMULÄR ----------------
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("contactForm");
     const introBtn = document.getElementById("introBtn");
     const meeting30Btn = document.getElementById("meeting30Btn");
     const modal = document.getElementById("calendlyModal");
     const iframe = document.getElementById("calendlyFrame");
-    const closeBtn = document.querySelector(".close-modal");
+    const closeModalBtn = document.querySelector(".close-modal");
 
     function openCalendly(url) {
         iframe.src = url;
@@ -139,8 +197,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (introBtn) introBtn.addEventListener("click", () => openCalendly("https://calendly.com/ugc-johannabredinger/ugc-intro-samtal"));
     if (meeting30Btn) meeting30Btn.addEventListener("click", () => openCalendly("https://calendly.com/ugc-johannabredinger/30min"));
-    if (closeBtn) closeBtn.addEventListener("click", closeModal);
-    if (modal) modal.addEventListener("click", (e) => { if(e.target === modal) closeModal(); });
+    if (closeModalBtn) closeModalBtn.addEventListener("click", closeModal);
+    if (modal) modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
 
     function showToast(message, color = "#c58c84") {
         const toast = document.getElementById("toast");
