@@ -26,8 +26,16 @@ const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
 // =====================================================================
 const VIDEOS = [
     { file: "gallery-1786021265354.MP4", poster: "thumbnails/glamofsweden.jpg", format: "Kampanj", niche: "Skönhet", brand: "Glam of Sweden" },
-    { file: "copy_131E8181-0CDB-42A5-8AFA-D9C017431573.MOV", poster: "thumbnails/hellomela.jpg", format: "Paid ad", niche: "Lifestyle", brand: "Hellomela" },
-    { file: "video6.MP4", poster: "thumbnails/snatched.jpg", format: "Testimonial", niche: "Träning", brand: "Snatched" },
+    { file: "copy_131E8181-0CDB-42A5-8AFA-D9C017431573.MOV", poster: "thumbnails/hellomela.jpg", format: "Paid ad", niche: "Träning", brand: "Hellomela" },
+    { file: "video6.MP4", poster: "thumbnails/snatched.jpg", format: "Testimonial", niche: "Lifestyle", brand: "Snatched" },
+    { file: "en-dag-i-mitt-liv.mp4", poster: "thumbnails/en-dag-i-mitt-liv.jpg", format: "Day in my life", niche: "Lifestyle", brand: "Vardag" },
+    { file: "koper-varandras-favoriter.mp4", poster: "thumbnails/koper-varandras-favoriter.jpg", format: "Par-format", niche: "Lifestyle", brand: "Shopping" },
+    { file: "handla-hudvard-med-mig.mp4", poster: "thumbnails/handla-hudvard-med-mig.jpg", format: "Shop with me", niche: "Skönhet", brand: "Hudvård" },
+    { file: "nageltjej-bestamma.mp4", poster: "thumbnails/nageltjej-bestamma.jpg", format: "Storytelling", niche: "Skönhet", brand: "Naglar" },
+    { file: "AI-bestammer.mp4", poster: "thumbnails/AI-bestammer.jpg", format: "GRWM", niche: "Skönhet", brand: "Smink" },
+    { file: "Trana-med-mig.mp4", poster: "thumbnails/Trana-med-mig.jpg", format: "Vlogg", niche: "Träning", brand: "Gym" },
+    { file: "110-kcal-mugcake.mp4", poster: "thumbnails/110-kcal-mugcake.jpg", format: "Recept", niche: "Träning", brand: "Mat" },
+    { file: "Inredningshack.mp4", poster: "thumbnails/Inredningshack.jpg", format: "Hack/tips", niche: "Lifestyle", brand: "Inredning" },
     // { file: "DITT-FILNAMN.mp4", poster: "thumbnails/DIN-BILD.jpg", format: "Unboxing", niche: "Lifestyle", brand: "Varumärke" },
 ];
 
